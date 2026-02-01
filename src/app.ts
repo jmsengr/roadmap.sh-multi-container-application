@@ -11,7 +11,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 // Interface
-import HttpError from "./interface/httpError.js";
+import type HttpError from "./interface/httpError.js";
 
 const app = express();
 
@@ -23,17 +23,17 @@ app.use(express.static(path.join(process.cwd(), "public")));
 
 // ----- ROUTES ----- //
 app.get("/test", async (req: Request, res: Response, next: NextFunction) => {
-  res.json({ success: true, data: "TEST MESSAGE" });
+    res.json({ success: true, data: "TEST MESSAGE" });
 });
 
 // Global Error Handler
 app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
-  const status = err.statusCode || 500;
-  res.status(status).json({
-    success: false,
-    message: err.message || "Something went wrong",
-    data: err.data || null,
-  });
+    const status = err.statusCode || 500;
+    res.status(status).json({
+        success: false,
+        message: err.message || "Something went wrong",
+        data: err.data || null,
+    });
 });
 
 export default app;
